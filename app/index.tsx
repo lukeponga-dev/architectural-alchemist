@@ -2,6 +2,7 @@
 import type { NextPage } from "next";
 import { useEffect, useState, useCallback } from "react";
 import VideoFeed from "../components/Agent/VideoFeed";
+import AgentPanel from "../components/Agent/AgentPanel";
 import { WebRTCManager, ShowcaseItem } from "../lib";
 import PublicGallery from "../components/Gallery/PublicGallery";
 import DesignDetailModal from "../components/Gallery/DesignDetailModal";
@@ -216,19 +217,19 @@ const Home: NextPage = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8">
             <div className="text-center space-y-4">
-                <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
                     Architectural Alchemist
                 </h1>
-                <div className="flex items-center justify-center gap-4 mt-2">
+                <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mt-2">
                     <button
                         onClick={() => setShowGallery(false)}
-                        className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${!showGallery ? "bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20" : "text-slate-400 hover:text-white"}`}
+                        className={`px-3 py-1.5 sm:px-4 rounded-full text-xs sm:text-sm font-bold transition-all ${!showGallery ? "bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20" : "text-slate-400 hover:text-white"}`}
                     >
                         Live Engine
                     </button>
                     <button
                         onClick={() => setShowGallery(true)}
-                        className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${showGallery ? "bg-purple-500 text-white shadow-lg shadow-purple-500/20" : "text-slate-400 hover:text-white"}`}
+                        className={`px-3 py-1.5 sm:px-4 rounded-full text-xs sm:text-sm font-bold transition-all ${showGallery ? "bg-purple-500 text-white shadow-lg shadow-purple-500/20" : "text-slate-400 hover:text-white"}`}
                     >
                         Community Gallery
                     </button>
@@ -236,40 +237,42 @@ const Home: NextPage = () => {
             </div>
 
             {!showGallery ? (
-                <div className="w-full max-w-3xl bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl overflow-hidden shadow-2xl">
-                    <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-slate-800/80 border-b border-slate-700 gap-3">
-                        <div className="flex items-center gap-3">
-                            <div
-                                className={`w-2 h-2 rounded-full ${isAgentConnected ? "bg-emerald-500 animate-pulse" : "bg-slate-600"}`}
-                            />
-                            <span className="font-semibold text-slate-200">
-                                {isAgentConnected ? "Agent Online" : "Agent Ready"}
-                            </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            {safeFrame && !isAgentConnected && (
-                                <button
-                                    onClick={() => {
-                                        const video = document.querySelector("video");
-                                        if (video && video.srcObject) {
-                                            connectAgent(video.srcObject as MediaStream);
-                                        }
-                                    }}
-                                    className="px-4 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-lg transition-colors text-sm"
+                <div className="w-full max-w-6xl space-y-6 lg:space-y-8">
+                    {/* Main Video Feed */}
+                    <div className="w-full max-w-3xl mx-auto bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl overflow-hidden shadow-2xl">
+                        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-slate-800/80 border-b border-slate-700 gap-3">
+                            <div className="flex items-center gap-3">
+                                <div
+                                    className={`w-2 h-2 rounded-full ${isAgentConnected ? "bg-emerald-500 animate-pulse" : "bg-slate-600"}`}
+                                />
+                                <span className="font-semibold text-slate-200 text-sm sm:text-base">
+                                    {isAgentConnected ? "Agent Online" : "Agent Ready"}
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                {safeFrame && !isAgentConnected && (
+                                    <button
+                                        onClick={() => {
+                                            const video = document.querySelector("video");
+                                            if (video && video.srcObject) {
+                                                connectAgent(video.srcObject as MediaStream);
+                                            }
+                                        }}
+                                        className="px-3 py-1.5 sm:px-4 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-lg transition-colors text-xs sm:text-sm"
+                                    >
+                                        Connect Agent
+                                    </button>
+                                )}
+                                <span
+                                    className={`px-2 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium ${safeFrame
+                                        ? "bg-emerald-500/20 text-emerald-400"
+                                        : "bg-red-500/20 text-red-400"
+                                        }`}
                                 >
-                                    Connect Agent
-                                </button>
-                            )}
-                            <span
-                                className={`px-3 py-1 rounded-full text-sm font-medium ${safeFrame
-                                    ? "bg-emerald-500/20 text-emerald-400"
-                                    : "bg-red-500/20 text-red-400"
-                                    }`}
-                            >
-                                {safeFrame ? "Safe Feed" : "Privacy Mode Active"}
-                            </span>
+                                    {safeFrame ? "Safe Feed" : "Privacy Mode Active"}
+                                </span>
+                            </div>
                         </div>
-                    </div>
 
                     <div className="p-4 sm:p-6">
                         <div
@@ -418,6 +421,12 @@ const Home: NextPage = () => {
                         </div>
                     )}
                 </div>
+                
+                {/* AI Design Assistant Panel */}
+                <div className="w-full max-w-3xl mx-auto">
+                    <AgentPanel message="AI Design Assistant Ready" />
+                </div>
+            </div>
             ) : (
                 <div className="w-full max-w-6xl animate-in fade-in zoom-in-95 duration-500">
                     <PublicGallery onDesignSelect={setSelectedDesign} />
