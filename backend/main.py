@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import settings, Settings
-from routers import webrtc, snapshot, gallery, spatial, privacy
+from routers import webrtc, snapshot, gallery, spatial, privacy, generation
 
 # Validate configuration
 Settings.validate()
@@ -35,6 +35,7 @@ app.include_router(snapshot.router)
 app.include_router(gallery.router)
 app.include_router(spatial.router)
 app.include_router(privacy.router)
+app.include_router(generation.router)
 
 
 @app.get("/")

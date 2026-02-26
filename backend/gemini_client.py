@@ -1,5 +1,5 @@
 import os
-import google.generativeai as genai
+from google import genai
 from dotenv import load_dotenv
 
 # Load .env for standalone usage
@@ -10,12 +10,14 @@ GEMINI_KEY = os.getenv("GEMINI_LIVE_API_KEY")
 if not GEMINI_KEY:
     raise ValueError("GEMINI_LIVE_API_KEY not set")
 
-# Configure the genai library with the API key
-genai.configure(api_key=GEMINI_KEY)
+# Initialize modern genai client
+client = genai.Client(api_key=GEMINI_KEY)
 
 
 def generate_text(prompt: str):
     """Generate text using Gemini model"""
-    model = genai.GenerativeModel('gemini-1.5-pro')
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-1.5-pro",
+        contents=prompt
+    )
     return response.text
