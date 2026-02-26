@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+gunicorn
+aiortc
+numpy
+av
+Pillow
+websockets
+pylibsrtp
