@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactCompiler: true,
   // Enable static export for Firebase Hosting
-  output: 'export',
+  output: "export",
   // Ensure images are optimized for static export
   images: {
     unoptimized: true,

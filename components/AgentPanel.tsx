@@ -4,9 +4,9 @@
  * @returns {JSX.Element} - A React component that renders the agent panel with the provided message
  */
 export default function AgentPanel({ message }: { message: string }) {
-    return (
-        <div className="backdrop-blur-lg bg-white/20 p-4 rounded-xl text-cyan-400 font-mono">
-            {message}
-        </div>
-    );
+  return (
+    <div className="backdrop-blur-lg bg-white/20 p-4 rounded-xl text-cyan-400 font-mono">
+      {message}
+    </div>
+  );
 }

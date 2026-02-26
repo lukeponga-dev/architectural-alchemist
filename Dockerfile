@@ -1,5 +1,5 @@
-# Use Python 3.12 runtime
-FROM python:3.12-slim
+# Use Python 3.11 runtime
+FROM python:3.11-slim
 
 # Install system dependencies required for aiortc and pylibsrtp
 RUN apt-get update && apt-get install -y \
@@ -22,7 +22,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY main.py .
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8080
 
 # Run the application with gunicorn
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000", "main:app"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8080", "main:app"]

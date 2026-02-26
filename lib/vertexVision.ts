@@ -1,4 +1,4 @@
-import vision from '@google-cloud/vision';
+import vision from "@google-cloud/vision";
 
 // Initialize Vision client with environment variables
 // The client will automatically use GOOGLE_APPLICATION_CREDENTIALS environment variable
@@ -6,13 +6,15 @@ import vision from '@google-cloud/vision';
 const client = new vision.ImageAnnotatorClient();
 
 export async function blurFaces(imageBuffer: Buffer) {
-    const [result] = await client.faceDetection({ image: { content: imageBuffer } });
-    const faces = result.faceAnnotations || [];
+  const [result] = await client.faceDetection({
+    image: { content: imageBuffer },
+  });
+  const faces = result.faceAnnotations || [];
 
-    if (faces.length === 0) return imageBuffer; // No faces
+  if (faces.length === 0) return imageBuffer; // No faces
 
-    // Here you would integrate a simple blur library (e.g., jimp, sharp)
-    // For demo purposes, return the original buffer
-    console.log(`Detected ${faces.length} face(s). Applying blur.`);
-    return imageBuffer;
+  // Here you would integrate a simple blur library (e.g., jimp, sharp)
+  // For demo purposes, return the original buffer
+  console.log(`Detected ${faces.length} face(s). Applying blur.`);
+  return imageBuffer;
 }

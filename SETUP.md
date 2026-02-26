@@ -24,12 +24,12 @@ This guide provides detailed setup instructions for running the Project Architec
 
 ### Required Software
 
-| Software | Version | Installation |
-|----------|---------|--------------|
-| Node.js | 18+ | [nodejs.org](https://nodejs.org) |
-| Python | 3.12 | [python.org](https://python.org) |
-| Git | 2.30+ | [git-scm.com](https://git-scm.com) |
-| FFmpeg | Latest | [ffmpeg.org](https://ffmpeg.org) |
+| Software | Version | Installation                       |
+| -------- | ------- | ---------------------------------- |
+| Node.js  | 18+     | [nodejs.org](https://nodejs.org)   |
+| Python   | 3.12    | [python.org](https://python.org)   |
+| Git      | 2.30+   | [git-scm.com](https://git-scm.com) |
+| FFmpeg   | Latest  | [ffmpeg.org](https://ffmpeg.org)   |
 
 ### Browser Requirements
 
@@ -327,4 +327,4 @@ After setup, you can:
 
 ---
 
-*Last Updated: Project Setup Documentation*
+_Last Updated: Project Setup Documentation_

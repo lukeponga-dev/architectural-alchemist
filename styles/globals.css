@@ -1,4 +1,76 @@
-/* styles/globals.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* ── Custom Theme (Tailwind v4 CSS-first config) ── */
+@theme {
+  --color-charcoal: #121212;
+  --color-cyan-50: #e0feff;
+  --color-cyan-100: #b3faff;
+  --color-cyan-200: #80f6ff;
+  --color-cyan-300: #4df1ff;
+  --color-cyan-400: #1aeaff;
+  --color-cyan-500: #00f3ff;
+  --color-cyan-600: #00ccda;
+  --color-cyan-700: #009bb3;
+  --color-cyan-800: #006c8c;
+  --color-cyan-900: #004366;
+  --color-cyan: #00f3ff;
+  --color-glass: rgba(18, 18, 18, 0.7);
+
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 3s ease-in-out infinite;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+/* ── Base Layer ── */
+@layer base {
+  body {
+    background-color: var(--color-charcoal);
+    color: #fff;
+    min-height: 100vh;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* ── Utility Classes ── */
+@utility glass-panel {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border-radius: 1rem;
+}
+
+@utility glass-button {
+  background: rgba(0, 243, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  color: #00f3ff;
+  transition: all 300ms ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
+
+  &:hover {
+    background: rgba(0, 243, 255, 0.2);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.3);
+  }
+}
+
+@utility text-glow {
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
+}

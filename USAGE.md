@@ -317,4 +317,4 @@ AI Response
 
 ---
 
-*Last Updated: Usage Documentation*
+_Last Updated: Usage Documentation_

@@ -6,4 +6,5 @@ numpy
 av
 Pillow
 websockets
+google-cloud-vision
 pylibsrtp

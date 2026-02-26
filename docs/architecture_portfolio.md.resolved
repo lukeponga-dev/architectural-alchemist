@@ -1,0 +1,39 @@
+# Project Architectural Alchemist
+
+## Technical Architecture & Design
+
+*"Transforming physical spaces into digital realities, in real-time."*
+
+### The "One-Take" Demo Pattern
+
+An example flow: "Point phone at wall → Voice command → Wall disappears into a space view → Walk closer." This describes our real-time spatial cognitive layer processing audio commands and video inputs seamlessly using WebRTC and Gemini.
+
+### System Architecture Breakdown
+
+Our architecture comprises several Google Cloud pillars, meticulously integrated to fulfill the AI constraints:
+
+1. **Frontend Experience (Next.js + Firebase)** 
+   The SpaceX-Minimalist dashboard acts as the central interface. It leverages `framer-motion` for 'Alchemical Transitions'—such as the dissolving effect between the real-life camera feed and generated AI previews—creating an immersive wow factor. It utilizes Firebase Anonymous Authentication to securely track temporary session state and ensure "Auth Before Queries" mandates are strictly followed.
+
+2. **The Real-Time "Brain" (Gemini Live API + WebRTC)**
+   Hosted on Google App Engine, the Python backend intercepts WebRTC media tracks (audio + video). By routing this directly into the Gemini Multimodal Live API via the BidiGenerateContent stream, we achieve ultra-low latency. We designed an advanced [InterruptionHandler](file:///c:/Users/lukeg/Project%20Architectural%20Alchemist/lib/interruption-handler.ts#31-387) logic so users can barge-in and rapidly correct the agent mid-sentence.
+
+3. **The "Privacy Shield" (Cloud Run + Vertex AI Vision)**
+   Deployed as a distinct serverless container on Cloud Run, this service enforces Strict Acceptable Use Policies. As video frames stream in, they are buffered and evaluated by Vertex AI Vision's Face Detection module. Should humans be detected, the system applies a dynamic Gaussian blur filter before the frame ever reaches the LLM's reasoning context.
+
+4. **Spatial Reasoning (Gemini 2.0 Flash)**
+   When the user points the camera and says "change this surface," our spatial engine calculates normalized spatial vectors. These vectors are passed via an API to the Gemini API (`gemini-2.0-flash`), which successfully identifies boundary regions, surface materials, and depth markers, returning a structured JSON format to isolate the wall, floor, or ceiling.
+
+5. **Video Style Transfer (Google Veo)**
+   Taking the isolated surfaces, our cloud pipeline invokes the Google Veo generative model via Vertex AI Model Garden. Using preset prompts out-of-the-box like "Photorealistic space scene seen through a modern architectural window", it creates a photorealistic rendering, dropping the generated asset back into the user interface via an alchemical CSS transition.
+
+6. **Cloud Persistence (Firestore)**
+   Snapshots and completed artifacts adhere to rigorous database partitioning. Private data strictly adheres to `/artifacts/{appId}/users/{userId}/designs`. If the user chooses to publish their transformed space, a copy is routed to `/artifacts/{appId}/public/data/showcase`, where the community gallery performs high-efficiency fetch queries.
+
+---
+
+### Technical Glossary for the Contest
+
+*   **Multimodal Latency**: The extremely brief delay between a human speaking or showing something on camera, and the AI comprehending and reacting. We optimized this using WebRTC instead of standard REST.
+*   **Barge-in / Interruption Handling**: The system's ability to stop talking instantly when a human interrupts, immediately listening and prioritizing the new instruction over its previous task.
+*   **AUP Compliant Pre-filtering**: Stripping potentially sensitive data (like faces) out of video feeds at the edge layer, ensuring privacy is guaranteed.

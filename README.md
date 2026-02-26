@@ -1,321 +1,116 @@
-# Project Architectural Alchemist
+# 🧪 Architectural Alchemist (Devpost - Gemini Live Agent Edition)
 
-A real-time AI-powered application that combines Next.js, Firebase, FastAPI, WebRTC, and Gemini Live API to create an intelligent agent with video and audio processing capabilities.
+**"Transform your world, but stay safe while doing it."**
 
-## 🚀 Tech Stack
+Architectural Alchemist is a real-time, AI-powered spatial reasoning engine that turns your living room into a digital canvas. Built with **Gemini Live**, **WebRTC**, and **Google Cloud Vision**, it allows users to interactively analyze their surroundings and plan architectural transformations.
+
+## 🚀 Vision
+
+Most AI interior design tools work with static photos. Architectural Alchemist works with **live movement**. By establishing a bidirectional WebRTC bridge to Gemini 1.5 Pro, we've created an agent that can see what you see, hear your ideas, and identify architectural surfaces with pixel-perfect precision.
+
+## 🛡️ Privacy as a Core Feature (AUP Compliance)
+
+Built for the **AUP Compliance** challenge, this project features a strict **Privacy Shield** integrated directly into its backend.
+
+- **Mandatory Privacy Gate Check**: No image is saved without undergoing server-side redaction.
+- **Crowd Blocking**: Strict threshold. Images containing >3 faces are immediately rejected. No crowds are analyzed.
+- **Server-Side Blurring**: Automatically detects 1-3 faces using Google Cloud Vision API and blurs the image _before_ it gets stored in the Cloud bucket.
+- **Client-Side Muting/Halting**: The frontend regularly samples the feed (`/process-frame`) and halts sending the stream to the AI reasoning engine when people are detected (Safe Feed concept).
+- **Secure Access**: The frontend retrieves temporary 15-minute Signed URLs. The internal bucket remains strictly private.
+
+## 🏗️ Technical Stack
+
+This project was intentionally partitioned to support static web exports and edge delivery.
 
 ### Frontend
 
-- **Framework**: Next.js 16 (React 19)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 4
-- **Backend Services**: Firebase (Auth, Firestore, Functions)
-- **UI Components**: Custom React components
+- **Framework**: Next.js (React), Static HTML Export compatible.
+- **Styling**: Tailwind CSS & Framer Motion.
+- **Functionality**: Live Video Feed capture, WebRTC client management, and UI overlays.
 
-### Backend
+### Backend (Python)
 
-- **Framework**: FastAPI (Python 3.12)
-- **WebRTC**: aiortc
-- **Media Processing**: PyAV, Pillow, NumPy
-- **Real-time**: WebSockets
-- **Deployment**: Google App Engine, Docker
+- **Framework**: FastAPI (runs on default port `8080`).
+- **Live Engine**: Gemini Live (WebRTC Integration) using `aiortc`.
+- **Spatial Reasoning**: Gemini 1.5 Pro via `google-generativeai` (`/spatial` endpoint).
+- **Privacy Shield**: Standalone frame processing & snapshot saving with Google Cloud Vision.
+- **Persistence**: Google Cloud Storage & Firestore.
 
-### AI Integration
+## ✨ Key Features
 
-- **Gemini Live API**: Real-time audio/video AI interactions
-- **Google Cloud Vision**: Image analysis
+1. **Interactive Spatial Inspection**: Click any surface in the live feed to get an AI breakdown of its material, color, and structural potential.
+2. **Community Gallery**: Save your "inspections" to a persistent gallery stored in Firestore and access redacted images via Signed URLs.
+3. **Omni-directional Audio**: Talk to the Alchemist as you move through your room via WebRTC.
+4. **Premium Showcase**: A high-fidelity viewing experience for exploring architectural snapshots.
 
----
+## 🛠️ Getting Started
 
-## 📋 Prerequisites
+### Prerequisites
 
-Before you begin, ensure you have the following installed:
+- Node.js (v18+)
+- Python (3.9+)
+- Google Cloud Platform Project with billing enabled (Firestore, Cloud Storage, Vision API).
+- Google Service Account Key JSON.
 
-### Common Requirements
+### Setup
 
-- Node.js 18+ and npm
-- Python 3.12+
-- Git
+1. **Clone the repository:**
 
-### For Frontend Development
+   ```bash
+   git clone <repo_url>
+   cd architectural-alchemist
+   ```
 
-- Firebase project with authentication enabled
-- Google Cloud project with necessary APIs
+2. **Environment Variables:**
+   Set the following variables in a `.env` file at the root:
 
-### For Backend Development
+   ```env
+   # API Keys
+   GEMINI_LIVE_API_KEY="..."
+   GOOGLE_APPLICATION_CREDENTIALS="/absolute/path/to/your/key.json"
+   GOOGLE_SERVICE_ACCOUNT_EMAIL="..."
+   GCP_PROJECT_ID="..."
 
-- Python virtual environment (venv)
-- FFmpeg (for media processing)
+   # Storage
+   SNAPSHOT_BUCKET="..."
+   FIRESTORE_COLLECTION="architectural_snapshots"
 
----
+   # Frontend Configuration
+   NEXT_PUBLIC_BACKEND_URL="http://localhost:8080"
+   NEXT_PUBLIC_FIREBASE_API_KEY="..."
+   # (Include other NEXT_PUBLIC_FIREBASE_* variables)
+   ```
 
-## 🛠️ Project Structure
+3. **Backend Setup:**
 
-```
-Project Architectural Alchemist/
-├── components/              # React components
-│   ├── AgentPanel.tsx      # Agent UI panel
-│   └── VideoFeed.tsx       # Video feed component
-├── firebase/               # Firebase configuration files
-├── lib/                    # Utility libraries
-│   ├── adk.ts             # Agent Development Kit
-│   ├── firebase.ts       # Firebase initialization
-│   └── vertexVision.ts   # Google Vision API integration
-├── pages/                  # Next.js pages
-│   ├── _app.tsx          # App wrapper
-│   └── index.tsx         # Main page
-├── styles/                 # CSS styles
-├── docs/                   # Project documentation
-├── main.py                # FastAPI backend (WebRTC + Gemini)
-├── requirements.txt       # Python dependencies
-├── package.json          # Node.js dependencies
-├── firebase.json         # Firebase configuration
-├── app.yaml              # Google App Engine config
-├── Dockerfile            # Docker configuration
-└── README.md             # This file
-```
+   ```bash
+   pip install fastapi uvicorn websockets aiortc av Pillow google-cloud-vision google-cloud-storage google-cloud-firestore google-generativeai
+   ```
 
----
+4. **Frontend Setup:**
 
-## ⚡ Quick Start
+   ```bash
+   npm install
+   ```
 
-### 1. Clone the Repository
+### Running Locally
 
-```
-bash
-git clone <repository-url>
-cd "Project Architectural Alchemist"
-```
+You'll need two terminals.
 
-### 2. Frontend Setup
+**Terminal 1 (Backend - FastAPI)**
 
-#### Install Dependencies
-
-```
-bash
-npm install
-```
-
-#### Configure Environment Variables
-
-Create a `.env.local` file in the root directory:
-
-```
-env
-# Firebase Configuration
-NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-
-# Optional: Use Firebase Emulators
-NEXT_PUBLIC_USE_FIREBASE_EMULATOR=false
-```
-
-#### Run Development Server
-
-```
-bash
-npm run dev
-```
-
-The frontend will be available at [http://localhost:3000](http://localhost:3000)
-
-### 3. Backend Setup
-
-#### Create Virtual Environment
-
-```
-bash
-# Create virtual environment
-python -m venv venv
-
-# Activate on Windows
-venv\Scripts\activate
-
-# Activate on macOS/Linux
-source venv/bin/activate
-```
-
-#### Install Dependencies
-
-```
-bash
-pip install -r requirements.txt
-```
-
-#### Configure Environment Variables
-
-Create a `.env` file in the root directory:
-
-```
-env
-# Gemini Live API Key (REQUIRED for real-time AI)
-GEMINI_LIVE_API_KEY=your_gemini_api_key
-
-# Google Cloud Credentials (for Vision API)
-GOOGLE_APPLICATION_CREDENTIALS=path/to/your/credentials.json
-```
-
-#### Run the Backend Server
-
-```
-bash
-# Using uvicorn directly
-uvicorn main:app --host 0.0.0.0 --port 8000
-
-# Or using the Python script
+```bash
 python main.py
 ```
 
-The backend will be available at [http://localhost:8000](http://localhost:8000)
+**Terminal 2 (Frontend - Next.js)**
 
----
-
-## 🔧 Running the Full Stack
-
-### Option 1: Run Both Separately
-
-1. Start the frontend: `npm run dev` (port 3000)
-2. Start the backend: `python main.py` (port 8000)
-
-### Option 2: Using Docker
-
-```
-bash
-# Build the Docker image
-docker build -t architectural-alchemist .
-
-# Run the container
-docker run -p 8000:8000 -p 3000:3000 architectural-alchemist
+```bash
+npm run dev
 ```
 
-### Option 3: Google App Engine Deployment
-
-```
-bash
-# Deploy to Google App Engine
-gcloud app deploy
-```
+Browse to `http://localhost:3000`.
 
 ---
 
-## 📱 Features
-
-### Current Features
-
-1. **Anonymous Authentication**
-   - Firebase anonymous sign-in
-   - User session management
-
-2. **Video Feed**
-   - Real-time camera access
-   - WebRTC stream handling
-   - Frame capture for analysis
-
-3. **Agent Panel**
-   - Real-time agent status display
-   - State management (IDLE, LISTENING, ANALYZING_SPACE, GENERATING_PREVIEW)
-
-4. **WebRTC Integration**
-   - Peer-to-peer media streaming
-   - Audio/video track processing
-   - ICE candidate handling
-
-5. **Gemini Live API Integration**
-   - Real-time audio streaming (16kHz, LINEAR16)
-   - Real-time video streaming (JPEG, 1 FPS, 768x768)
-   - Bidirectional communication
-
-6. **Safety Filter**
-   - Vertex AI Vision pre-filter
-   - Person detection to pause processing
-
-### Upcoming Features
-
-- Real Gemini Live API response handling
-- Multi-user support
-- Advanced agent state management
-- Enhanced video analysis
-
----
-
-## 🔐 Environment Variables Reference
-
-### Frontend (.env.local)
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase API Key | Yes |
-| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | Firebase Auth Domain | Yes |
-| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | Firebase Project ID | Yes |
-| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | Firebase Storage Bucket | Yes |
-| `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | Firebase Messaging Sender ID | Yes |
-| `NEXT_PUBLIC_FIREBASE_APP_ID` | Firebase App ID | Yes |
-| `NEXT_PUBLIC_USE_FIREBASE_EMULATOR` | Use Firebase Emulators | No |
-
-### Backend (.env)
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `GEMINI_LIVE_API_KEY` | Gemini Live API Key | Yes |
-| `GOOGLE_APPLICATION_CREDENTIALS` | GCP Service Account JSON | No |
-
----
-
-## 🐛 Troubleshooting
-
-### Frontend Issues
-
-**Firebase Connection Failed**
-
-- Ensure your Firebase config is correct in `.env.local`
-- Check that authentication is enabled in Firebase Console
-
-**Video Not Loading**
-
-- Grant camera/microphone permissions in browser
-- Ensure you're using HTTPS or localhost
-
-### Backend Issues
-
-**Port Already in Use**
-
-- Change the port: `uvicorn main:app --port 8001`
-
-**Module Not Found**
-
-- Ensure virtual environment is activated
-- Run `pip install -r requirements.txt` again
-
-**WebRTC Connection Issues**
-
-- Check firewall settings
-- Ensure STUN server is accessible (stun.l.google.com:19302)
-
----
-
-## 📄 License
-
-This project is for educational and development purposes.
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create3. Make your a feature branch
- changes
-3. Submit a pull request
-
----
-
-## 📞 Support
-
-For issues and questions, please open a GitHub issue.
-
----
-
-*Generated on: Project Architectural Alchemist - Onboarding Documentation*
+_Built for the Gemini Live Agent Hackathon._
