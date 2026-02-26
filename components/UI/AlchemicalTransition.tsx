@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { glassmorphism, animations } from "../styles/brand-system";
+import { glassmorphism, animations } from "../../styles/brand-system";
 
 interface AlchemicalTransitionProps {
   isTransitioning: boolean;

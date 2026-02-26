@@ -5,7 +5,7 @@
 
 import React, { forwardRef } from "react";
 import { motion, MotionProps } from "framer-motion";
-import { glassmorphism, animations } from "../styles/brand-system";
+import { glassmorphism, animations } from "../../styles/brand-system";
 
 interface GlassPanelProps extends MotionProps {
   children: React.ReactNode;

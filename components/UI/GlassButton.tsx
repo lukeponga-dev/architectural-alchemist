@@ -5,7 +5,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { glassmorphism, animations } from "../styles/brand-system";
+import { glassmorphism, animations } from "../../styles/brand-system";
 
 interface GlassButtonProps {
   children: React.ReactNode;

@@ -19,10 +19,13 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY main.py .
+COPY backend/ ./backend/
+
+# Set environment variable for Google Cloud credentials
+ENV GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
 
 # Expose port
 EXPOSE 8080
 
 # Run the application with gunicorn
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8080", "main:app"]
+CMD ["sh", "-c", "cd backend && PYTHONPATH=. python -m gunicorn -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8080 main:app"]

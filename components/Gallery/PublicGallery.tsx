@@ -5,10 +5,10 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
-import GlassPanel from "./GlassPanel";
-import GlassButton from "./GlassButton";
-import { glassmorphism } from "../styles/brand-system";
-import { ShowcaseItem } from "../lib/firestore-manager";
+import GlassPanel from "../UI/GlassPanel";
+import GlassButton from "../UI/GlassButton";
+import { glassmorphism } from "../../styles/brand-system";
+import { ShowcaseItem } from "../../lib";
 
 interface PublicGalleryProps {
   onDesignSelect?: (design: ShowcaseItem) => void;
@@ -35,9 +35,7 @@ const PublicGallery: React.FC<PublicGalleryProps> = ({
   const loadGallery = async () => {
     setLoading(true);
     try {
-      const { db } = await import("../lib/firebase");
-      const { default: FirestoreManager } =
-        await import("../lib/firestore-manager");
+      const { db, FirestoreManager } = await import("../../lib");
 
       const manager = new FirestoreManager(db, "architectural-alchemist");
       const items = await manager.getPublicGallery(limit);

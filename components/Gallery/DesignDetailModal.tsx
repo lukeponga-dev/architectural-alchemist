@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { ShowcaseItem } from "../lib/firestore-manager";
+import { ShowcaseItem } from "../../lib";
 
 interface DesignDetailModalProps {
   design: ShowcaseItem | null;
@@ -35,9 +35,7 @@ const DesignDetailModal: React.FC<DesignDetailModalProps> = ({
 
   const handleLike = async () => {
     try {
-      const { db } = await import("../lib/firebase");
-      const { default: FirestoreManager } =
-        await import("../lib/firestore-manager");
+      const { db, FirestoreManager } = await import("../../lib");
       const manager = new FirestoreManager(db, "architectural-alchemist");
       if (design.id) {
         const newLikes = await manager.toggleLike(design.id);
@@ -200,44 +198,44 @@ const DesignDetailModal: React.FC<DesignDetailModalProps> = ({
           {/* Materials & Colors */}
           {(design.metadata?.materials?.length ||
             design.metadata?.colors?.length) && (
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {design.metadata?.materials &&
-                design.metadata.materials.length > 0 && (
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {design.metadata?.materials &&
+                  design.metadata.materials.length > 0 && (
+                    <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/30">
+                      <p className="text-slate-500 text-[10px] uppercase tracking-wider font-bold mb-2">
+                        Materials
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {design.metadata.materials.map((material, i) => (
+                          <span
+                            key={i}
+                            className="bg-slate-700/50 text-slate-300 px-2 py-0.5 rounded-full text-xs"
+                          >
+                            {material}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                {design.metadata?.colors && design.metadata.colors.length > 0 && (
                   <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/30">
                     <p className="text-slate-500 text-[10px] uppercase tracking-wider font-bold mb-2">
-                      Materials
+                      Colors
                     </p>
                     <div className="flex flex-wrap gap-1.5">
-                      {design.metadata.materials.map((material, i) => (
+                      {design.metadata.colors.map((color, i) => (
                         <span
                           key={i}
                           className="bg-slate-700/50 text-slate-300 px-2 py-0.5 rounded-full text-xs"
                         >
-                          {material}
+                          {color}
                         </span>
                       ))}
                     </div>
                   </div>
                 )}
-              {design.metadata?.colors && design.metadata.colors.length > 0 && (
-                <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/30">
-                  <p className="text-slate-500 text-[10px] uppercase tracking-wider font-bold mb-2">
-                    Colors
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {design.metadata.colors.map((color, i) => (
-                      <span
-                        key={i}
-                        className="bg-slate-700/50 text-slate-300 px-2 py-0.5 rounded-full text-xs"
-                      >
-                        {color}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
+              </div>
+            )}
 
           {/* Tags */}
           {design.tags && design.tags.length > 0 && (
