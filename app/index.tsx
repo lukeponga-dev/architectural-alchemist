@@ -8,7 +8,7 @@ import PublicGallery from "../components/Gallery/PublicGallery";
 import DesignDetailModal from "../components/Gallery/DesignDetailModal";
 
 const BACKEND_URL =
-    process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8080";
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const Home: NextPage = () => {
     const [safeFrame, setSafeFrame] = useState(true);

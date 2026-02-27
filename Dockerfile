@@ -21,8 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY backend/ ./backend/
 
-# Set environment variable for Google Cloud credentials
-ENV GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
+# Use Google Cloud's built-in authentication in production
 
 # Expose port
 EXPOSE 8080

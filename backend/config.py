@@ -32,7 +32,7 @@ class Settings:
     FRAME_TIMEOUT_SECONDS: float = 0.5
     
     # API Model Configuration
-    GEMINI_MODEL: str = "models/gemini-1.5-flash-8b-exp-0827"
+    GEMINI_MODEL: str = "gemini-1.5-flash"
     GEMINI_PRO_MODEL: str = "gemini-1.5-pro"
     
     @classmethod
